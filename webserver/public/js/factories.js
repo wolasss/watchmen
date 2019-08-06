@@ -8,15 +8,15 @@
 
   var factories = angular.module('watchmenFactories');
   var reportCache;
-  var pingPluginsCache;
-  
+  var pingPluginsCache, groupsCache;
+
   factories.factory('Report', function ($resource, $cacheFactory) {
     reportCache = $cacheFactory('Services');
 
     setInterval(function(){
       reportCache.removeAll();
     }, CACHE_EXPIRATION);
-    
+
     var Report = $resource('/api/report/services/:id', {id: '@id'}, {
       'get': { method:'GET', cache: reportCache},
       'query': { method:'GET', isArray:true, cache: reportCache}
@@ -31,6 +31,8 @@
     return Report;
   });
 
+
+
   factories.factory('Service', function ($resource) {
     return $resource('/api/services/:id',
         {id: '@id'}, {
@@ -44,6 +46,12 @@
           }
 
         });
+  });
+
+  factories.factory('Groups', function ($resource, $cacheFactory) {
+      groupsCache = $cacheFactory('Groups');
+
+      return $resource('/api/groups');
   });
 
   factories.factory('PingPlugins', function ($resource, $cacheFactory) {

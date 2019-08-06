@@ -7,13 +7,14 @@
 
   var watchmenControllers = angular.module('watchmenControllers');
 
-  watchmenControllers.controller('ServiceListCtrl',
+  watchmenControllers.controller('ServicesCtrl',
       function (
           $scope,
           $filter,
           $timeout,
           Report,
           Service,
+          Groups,
           usSpinnerService,
           ngTableUtils
       ) {
@@ -31,11 +32,26 @@
           scheduleNextTick();
         }
 
+        $scope.groups = [];
+
+        Groups.get(function(res) {
+             $scope.groups = res.groups;
+
+             $scope.groups.forEach(group => {
+                 $scope.tableParams[group] = ngTableUtils.createngTableParams(key, $scope, $filter);
+             });
+        }, function(err) {
+            console.error(err);
+        });
+
         function reload(doneCb, errorHandler) {
           Report.clearCache();
           $scope.services = Report.query(function (services) {
             $scope[key] = services;
-            $scope.tableParams.reload();
+
+            $scope.groups.forEach(group => {
+                $scope.tableParams[group] && $scope.tableParams[group].reload();
+            });
 
             $scope.errorLoadingServices = null; // reset error
             transition.loaded();
@@ -56,7 +72,11 @@
 
         var key = 'tableServicesData';
         $scope[key] = [];
-        $scope.tableParams = ngTableUtils.createngTableParams(key, $scope, $filter);
+        $scope.tableParams = {};
+
+        $scope.getTableParams = function(group) {
+            return $scope.tableParams[group];
+        }
 
         var filterToMeCheckboxIsPresent = document.getElementById('filterRestrictedToMe');
         if (filterToMeCheckboxIsPresent && window.localStorage) {
@@ -77,11 +97,22 @@
 
         transition.loading();
 
-        $scope.serviceFilter = function (row) {
-          if ($scope.filterRestrictedToMe && !row.service.isRestricted) {
-            return false;
-          }
-          return row.service.name.indexOf($scope.query || '') > -1;
+        $scope.filterByGroup = function(group) {
+            return function(row) {
+                return row && row.service.group === group;
+            }
+        }
+
+        $scope.serviceFilter = function (group) {
+            return function(row) {
+                if ($scope.filterRestrictedToMe && !row.service.isRestricted) {
+                  return false;
+                }
+
+                console.log(group, row.service.name, $scope.query);
+
+                return row && row.service.group === group && row.service.name.indexOf($scope.query || '') > -1;
+            }
         };
 
         $scope.delete = function (id) {

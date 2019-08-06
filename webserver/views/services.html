@@ -1,0 +1,18 @@
+<div ng-include="'header.html'"></div>
+
+<div ng-if="errorLoadingServices" class="alert alert-danger" role="alert">
+    <span class="glyphicon glyphicon-exclamation-sign" aria-hidden="true"></span>
+    <span>{{errorLoadingServices}}</span>
+</div>
+
+<div class="container-fluid" ng-show="!loading">
+    <div class="row">
+        <div ng-repeat="(key, group) in groups" class="service-group">
+            <h1 class="group-title">{{group}}</h1>
+                <ng-include
+                  src="'service-list.html'">
+                </ng-include>
+            </div>
+        </div>
+    </div>
+</div>

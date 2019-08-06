@@ -16,6 +16,7 @@
         $filter,
         $stateParams,
         Service,
+        Groups,
         Report
     ) {
       $scope.service = new Service();
@@ -29,6 +30,10 @@
       $scope.service.failuresToBeOutage = 1;
       $scope.service.port = 80;
       $scope.service.pingServiceName = 'http-head';
+
+      Groups.get(function(res) {
+           $scope.groups = res.groups;
+      });
 
       $scope.save = function () {
 

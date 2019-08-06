@@ -22,6 +22,16 @@
                 <div class="descr col-sm-4">How would you call your service</div>
             </div>
             <div class="form-group">
+                <label for="service-pingService-name" class="col-sm-2 control-label">Group</label>
+                <div class="col-sm-6">
+                    <select ng-options="group as group for group in groups"
+                            id="service-group"
+                            ng-model="service.group" class="form-control">
+                    </select>
+                </div>
+                <div class="descr col-sm-4">Service group</div>
+            </div>
+            <div class="form-group">
                 <label for="url" class="col-sm-2 control-label">URL</label>
                 <div class="col-sm-6">
                     <input ng-required="true" ng-model="service.url" type="text" class="form-control" id="url" placeholder="Enter URL">

@@ -16,6 +16,7 @@
         $filter,
         $stateParams,
         Service,
+        Groups,
         Report,
         usSpinnerService
     ) {
@@ -34,6 +35,12 @@
 
       $scope.editServiceTitle = "Update service";
 
+      $scope.groups = Groups.get();
+
+      Groups.get(function(res) {
+           $scope.groups = res.groups;
+      });
+
       $scope.service = Service.get({id: $stateParams.id}, function(){
         loaded();
       }, function(err){
@@ -48,6 +55,8 @@
 
         $scope.service.pingServiceOptions = {};
         $scope.service.pingServiceOptions[$scope.service.pingServiceName] = $scope.selectedPingServiceOptions;
+
+        console.log($scope.service)
 
         $scope.service.$save(function () {
           Report.clearCache();

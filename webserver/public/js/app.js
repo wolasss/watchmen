@@ -22,8 +22,8 @@
 
         $stateProvider.state('services', {
             url: '/services',
-            templateUrl: 'service-list.html',
-            controller: 'ServiceListCtrl'
+            templateUrl: 'services.html',
+            controller: 'ServicesCtrl'
         }).state('viewService', {
             url: '/services/:id/view',
             templateUrl: 'service-detail.html',

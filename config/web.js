@@ -14,6 +14,7 @@ module.exports = {
     admins: process.env.WATCHMEN_ADMINS,
 
     ga_analytics_ID: process.env.WATCHMEN_GOOGLE_ANALYTICS_ID,
-
+    title: process.env.WATCHMEN_TITLE || 'watchmen',
+    groups: process.env.WATCHMEN_GROUPS && process.env.WATCHMEN_GROUPS.split(',') || ['Default'],
     baseUrl: '/'
 };
