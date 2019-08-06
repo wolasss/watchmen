@@ -56,6 +56,7 @@
     "validator": "^3.39.0",
     "watchmen-ping-http-contains": "^0.0.2",
     "watchmen-ping-http-head": "^0.2.0",
+    "watchmen-ping-icmp": "^0.1.2",
     "watchmen-plugin-aws-ses": "0.0.1",
     "watchmen-plugin-console": "0.2.0"
   },
