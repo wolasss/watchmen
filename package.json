@@ -10,7 +10,9 @@
     "posttest": "kill `cat test/redis.pid`",
     "precoverage": "redis-server test/redis.test.conf",
     "pretest": "redis-server test/redis.test.conf",
-    "test": "mocha -R list test/*.js"
+    "test": "mocha -R list test/*.js",
+    "web-server": "pm2 stop web-server; pm2 start --update-env --name web-server run-web-server.js --log-date-format 'YYYY-MM-DD HH:mm'; pm2 save",
+    "monitor": "pm2 stop monitor; pm2 start --update-env --name monitor run-monitor-server.js --log-date-format 'YYYY-MM-DD HH:mm'; pm2 save"
   },
   "description": "A simple service monitor",
   "version": "3.3.1",
