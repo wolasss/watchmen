@@ -7,7 +7,7 @@ module.exports.getRoutes = function (){
 
   function serveIndex(req, res){
     res.render('index.html', {
-      title: 'watchmen'
+      title: process.env.WATCHMEN_TITLE || 'watchmen'
     });
   }
 

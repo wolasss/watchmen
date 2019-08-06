@@ -26,7 +26,7 @@
                         <li><a target="_self" href="/logout">Logout <%=user.email%></a></li>
                     </ul>
                 </li>
-                <% } else { %>
+                <% } else if(!no_auth) { %>
                   <li>
                       <a target="_self" href="/auth/google">Sign In with Google</a>
                   </li>
