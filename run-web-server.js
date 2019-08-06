@@ -20,8 +20,10 @@ if (!storage) {
   return process.exit(RETURN_CODES.BAD_STORAGE);
 }
 
+const isBoundToLocalhost = process.env.WATCHMEN_BIND_TO_LOCALHOST_ONLY === 'true';
+
 var app = expressApp(storage);
-var server = app.listen(program.port, function () {
+var server = app.listen(program.port, isBoundToLocalhost ? 'localhost' : null, function () {
   if (server.address()) {
     console.log("watchmen server listening on port %d in %s mode", program.port, program.env);
   } else {
